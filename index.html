@@ -1,9 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>CV Fácil - Crea tu currículum</title>
 
   <style>
@@ -13,35 +13,44 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f1f3f5;
       color: #222;
     }
+
+    /* =========================
+       CABECERA DE LA WEB
+       ========================= */
 
     header {
       background: #111827;
       color: white;
-      padding: 40px 20px;
+      padding: 35px 20px;
       text-align: center;
     }
 
     header h1 {
-      margin: 0 0 10px;
-      font-size: 40px;
+      margin: 0 0 8px;
+      font-size: 38px;
     }
 
     header p {
       margin: 0;
-      font-size: 18px;
+      font-size: 17px;
     }
 
+    /* =========================
+       CONTENEDOR
+       ========================= */
+
     .container {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 30px auto;
       padding: 20px;
       display: grid;
-      grid-template-columns: 1fr 1.15fr;
+      grid-template-columns: 360px 1fr;
       gap: 25px;
+      align-items: start;
     }
 
     .box {
@@ -51,26 +60,31 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    h2 {
+    .box h2 {
       margin-top: 0;
       color: #111827;
     }
+
+    /* =========================
+       FORMULARIO
+       ========================= */
 
     label {
       display: block;
       margin-top: 15px;
       margin-bottom: 5px;
       font-weight: bold;
+      font-size: 14px;
     }
 
     input,
     textarea {
       width: 100%;
-      padding: 12px;
+      padding: 11px;
       border: 1px solid #ccc;
-      border-radius: 7px;
-      font-size: 15px;
-      font-family: Arial, sans-serif;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     textarea {
@@ -79,8 +93,8 @@
     }
 
     input[type="file"] {
-      padding: 9px;
-      background: #f9fafb;
+      padding: 8px;
+      background: #f8f8f8;
     }
 
     button {
@@ -88,7 +102,7 @@
       margin-top: 20px;
       padding: 14px;
       border: 0;
-      border-radius: 7px;
+      border-radius: 6px;
       background: #2563eb;
       color: white;
       font-size: 16px;
@@ -109,138 +123,327 @@
     }
 
     /* =========================
-       PLANTILLA DEL CV
+       CV - FORMATO A4
        ========================= */
 
     #cv {
+      width: 210mm;
+      min-height: 297mm;
       background: white;
-      min-height: 700px;
-      border: 1px solid #ddd;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin: 0 auto;
+      padding: 15mm 15mm 18mm 15mm;
+      position: relative;
       overflow: hidden;
+      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    .cv-header {
-      background: #2563eb;
-      color: white;
-      padding: 30px;
+    /*
+      Marca de agua muy suave parecida
+      a la de la plantilla original.
+    */
+
+    #cv::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.035;
+
+      background-image:
+        radial-gradient(circle at 20% 20%,
+          #555 0,
+          #555 2px,
+          transparent 3px),
+        radial-gradient(circle at 80% 35%,
+          #555 0,
+          #555 2px,
+          transparent 3px),
+        linear-gradient(
+          125deg,
+          transparent 48%,
+          #555 49%,
+          #555 50%,
+          transparent 51%
+        );
+
+      background-size:
+        150px 150px,
+        180px 180px,
+        220px 220px;
+    }
+
+    .cv-contenido {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* =========================
+       CABECERA CV
+       ========================= */
+
+    .cv-top {
+      display: grid;
+      grid-template-columns: 1fr 125px;
+      gap: 25px;
+      min-height: 125px;
+      align-items: start;
+    }
+
+    .cv-identidad {
+      padding-top: 2px;
+    }
+
+    .cv-nombre {
+      margin: 0;
+      font-size: 29px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    .cv-nombre strong {
+      font-weight: 700;
+    }
+
+    .cv-contacto {
+      margin-top: 14px;
+      color: #555;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .contacto-linea {
       display: flex;
       align-items: center;
-      gap: 25px;
+      gap: 9px;
     }
 
-    .foto-container {
-      width: 115px;
-      height: 115px;
-      flex-shrink: 0;
-      border-radius: 50%;
+    .contacto-icono {
+      width: 17px;
+      text-align: center;
+      color: #111;
+      font-size: 14px;
+    }
+
+    .cv-foto {
+      width: 125px;
+      height: 145px;
+      background: #ddd;
       overflow: hidden;
-      background: white;
-      border: 4px solid rgba(255,255,255,0.9);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .foto-container img {
+    .cv-foto img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
     .foto-placeholder {
-      color: #2563eb;
+      color: white;
       font-size: 13px;
       text-align: center;
-      padding: 10px;
-    }
-
-    .cv-header h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
-    }
-
-    .cv-header .puesto {
-      font-size: 17px;
-      opacity: 0.95;
-    }
-
-    .cv-contacto {
-      padding: 15px 30px;
-      background: #f3f4f6;
-      color: #374151;
-      font-size: 14px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .cv-body {
-      padding: 30px;
-    }
-
-    .cv-seccion {
-      margin-bottom: 28px;
-    }
-
-    .cv-seccion h3 {
-      color: #2563eb;
-      font-size: 18px;
-      margin: 0 0 10px;
-      padding-bottom: 7px;
-      border-bottom: 2px solid #2563eb;
-    }
-
-    .cv-seccion p {
-      margin: 0;
-      line-height: 1.6;
-      white-space: pre-line;
-      color: #444;
-    }
-
-    .habilidades {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .habilidad {
-      background: #e5edff;
-      color: #1d4ed8;
-      padding: 7px 12px;
-      border-radius: 20px;
-      font-size: 13px;
       font-weight: bold;
     }
 
-    @media (max-width: 800px) {
+    /* =========================
+       PUESTO
+       ========================= */
+
+    .cv-puesto {
+      display: none;
+    }
+
+    /* =========================
+       SECCIONES
+       ========================= */
+
+    .cv-seccion {
+      margin-top: 20px;
+    }
+
+    .cv-titulo-seccion {
+      margin: 0 0 7px;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #222;
+    }
+
+    .cv-titulo-seccion::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background: #ddd;
+      margin-top: 4px;
+    }
+
+    .cv-perfil {
+      padding-left: 0;
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: #444;
+      text-align: justify;
+    }
+
+    /* =========================
+       EXPERIENCIA / FORMACIÓN
+       ========================= */
+
+    .cv-item {
+      display: grid;
+      grid-template-columns: 145px 1fr;
+      gap: 15px;
+      margin-bottom: 13px;
+      font-size: 12.5px;
+    }
+
+    .cv-fecha {
+      font-weight: 700;
+      color: #333;
+      line-height: 1.35;
+    }
+
+    .cv-detalle {
+      color: #333;
+      line-height: 1.4;
+    }
+
+    .cv-puesto-item {
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 1px;
+    }
+
+    .cv-empresa {
+      font-weight: 400;
+      margin-bottom: 3px;
+    }
+
+    .cv-detalle ul {
+      margin: 3px 0 0 16px;
+      padding: 0;
+    }
+
+    .cv-detalle li {
+      margin-bottom: 2px;
+    }
+
+    /* =========================
+       HABILIDADES
+       ========================= */
+
+    .habilidades-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 60px;
+      row-gap: 4px;
+      margin-top: 7px;
+    }
+
+    .habilidad-item {
+      position: relative;
+      padding-left: 14px;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .habilidad-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    /* =========================
+       IDIOMAS
+       ========================= */
+
+    .idiomas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 60px;
+      margin-top: 5px;
+    }
+
+    .idioma {
+      font-size: 12.5px;
+      line-height: 1.7;
+    }
+
+    .idioma strong {
+      font-weight: 700;
+    }
+
+    /* =========================
+       INFORMACIÓN ADICIONAL
+       ========================= */
+
+    .informacion-lista {
+      margin: 4px 0 0;
+      padding-left: 17px;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 1000px) {
+
       .container {
         grid-template-columns: 1fr;
       }
+
+      #cv {
+        width: 100%;
+        min-height: auto;
+      }
     }
 
-    @media (max-width: 500px) {
-      header h1 {
-        font-size: 30px;
+    @media (max-width: 600px) {
+
+      .cv-top {
+        grid-template-columns: 1fr;
       }
 
-      .cv-header {
-        flex-direction: column;
-        text-align: center;
+      .cv-foto {
+        order: -1;
+        width: 110px;
+        height: 125px;
       }
 
-      .cv-header h1 {
-        font-size: 26px;
+      .cv-item {
+        grid-template-columns: 1fr;
+        gap: 2px;
       }
 
-      .cv-body {
-        padding: 20px;
+      .habilidades-grid,
+      .idiomas-grid {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      #cv {
+        padding: 25px;
       }
     }
 
     /* =========================
-       IMPRESIÓN / PDF
+       IMPRESIÓN
        ========================= */
 
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
     @media print {
+
       body {
         background: white;
       }
@@ -259,15 +462,17 @@
       }
 
       .box {
-        box-shadow: none;
         padding: 0;
+        box-shadow: none;
+        border-radius: 0;
       }
 
       #cv {
-        border: none;
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
         box-shadow: none;
-        width: 100%;
-        min-height: auto;
+        border: none;
       }
     }
   </style>
@@ -280,104 +485,428 @@
   <p>Crea tu currículum profesional gratis</p>
 </header>
 
+
 <div class="container">
 
-  <!-- FORMULARIO -->
+  <!-- =====================================================
+       FORMULARIO
+       ===================================================== -->
+
   <div class="box formulario">
+
     <h2>Datos de tu CV</h2>
 
     <label for="nombre">Nombre completo</label>
-    <input id="nombre" placeholder="Ej: Juan García">
+    <input
+      id="nombre"
+      placeholder="Ej: Ángel Martín"
+    >
 
     <label for="puesto">Puesto profesional</label>
-    <input id="puesto" placeholder="Ej: Administrativo">
+    <input
+      id="puesto"
+      placeholder="Ej: Operario de producción"
+    >
 
     <label for="foto">Foto</label>
-    <input id="foto" type="file" accept="image/*" onchange="cargarFoto(event)">
+    <input
+      id="foto"
+      type="file"
+      accept="image/*"
+      onchange="cargarFoto(event)"
+    >
 
     <label for="email">Email</label>
-    <input id="email" type="email" placeholder="Ej: juan@email.com">
+    <input
+      id="email"
+      type="email"
+      placeholder="Ej: juan@email.com"
+    >
 
     <label for="telefono">Teléfono</label>
-    <input id="telefono" placeholder="Ej: 600 123 456">
+    <input
+      id="telefono"
+      placeholder="Ej: 600 123 456"
+    >
 
-    <label for="ciudad">Ciudad</label>
-    <input id="ciudad" placeholder="Ej: Barcelona">
+    <label for="ciudad">Dirección / Ciudad</label>
+    <input
+      id="ciudad"
+      placeholder="Ej: 08812, Sant Pere de Ribes, Barcelona"
+    >
 
-    <label for="perfil">Perfil profesional</label>
-    <textarea id="perfil" placeholder="Escribe una breve descripción sobre ti"></textarea>
+    <label for="perfil">Resumen profesional</label>
+    <textarea
+      id="perfil"
+      placeholder="Escribe una breve descripción profesional..."
+    ></textarea>
+
 
     <label for="experiencia">Experiencia laboral</label>
-    <textarea id="experiencia" placeholder="Empresa, puesto, años y principales tareas"></textarea>
+
+    <textarea
+      id="experiencia"
+      placeholder="Ejemplo:
+
+10/2025 - Actual
+Operario de producción
+Parcer - Vilanova i la Geltrú
+• Paquetería, producción y picking
+
+03/2026 - 06/2026
+Mozo de almacén
+Amphora - Vilafranca del Penedès
+• Picking y packing"
+    ></textarea>
+
 
     <label for="formacion">Formación</label>
-    <textarea id="formacion" placeholder="Estudios, cursos, títulos..."></textarea>
 
-    <label for="habilidades">Habilidades</label>
-    <textarea id="habilidades" placeholder="Ej: Atención al cliente, trabajo en equipo, informática"></textarea>
+    <textarea
+      id="formacion"
+      placeholder="Ejemplo:
 
-    <button onclick="generarCV()">Generar mi CV</button>
+09/2023 - 06/2024
+Grau Mig: Gestió i administració d'Empreses
+Institut d'Educació Secundària Can Puig
 
-    <button class="btn-guardar" onclick="window.print()">
+09/2021 - 06/2022
+Educació Secundària Obligatòria
+Aulari Blanc"
+    ></textarea>
+
+
+    <label for="habilidades">
+      Habilidades
+    </label>
+
+    <textarea
+      id="habilidades"
+      placeholder="Ej: Capacidad de aprendizaje, Compromiso, Trabajo en equipo, Responsabilidad, Puntualidad y disciplina"
+    ></textarea>
+
+
+    <label for="idiomas">
+      Idiomas
+    </label>
+
+    <textarea
+      id="idiomas"
+      placeholder="Ej:
+
+Catalán: Nativo
+Castellano: Nativo
+Inglés: Básico"
+    ></textarea>
+
+
+    <label for="informacion">
+      Información adicional
+    </label>
+
+    <textarea
+      id="informacion"
+      placeholder="Ej:
+
+Carnet de conducir
+Coche propio
+Disponibilidad total e inmediata
+Carnet transpaleta manual y eléctrica"
+    ></textarea>
+
+
+    <button onclick="generarCV()">
+      Generar mi CV
+    </button>
+
+    <button
+      class="btn-guardar"
+      onclick="window.print()"
+    >
       💾 Guardar PDF
     </button>
+
   </div>
 
 
-  <!-- VISTA PREVIA -->
+  <!-- =====================================================
+       VISTA PREVIA
+       ===================================================== -->
+
   <div class="box">
-    <h2 class="vista-titulo">Vista previa</h2>
+
+    <h2 class="vista-titulo">
+      Vista previa
+    </h2>
+
+
+    <!-- ================= CV ================= -->
 
     <div id="cv">
 
-      <div class="cv-header">
+      <div class="cv-contenido">
 
-        <div class="foto-container">
-          <div class="foto-placeholder" id="fotoPlaceholder">
-            Tu foto
+        <!-- CABECERA -->
+
+        <div class="cv-top">
+
+          <div class="cv-identidad">
+
+            <h1
+              class="cv-nombre"
+              id="cvNombre"
+            >
+              ÁNGEL <strong>MARTÍN</strong>
+            </h1>
+
+
+            <div class="cv-contacto">
+
+              <div class="contacto-linea">
+                <span class="contacto-icono">⌖</span>
+                <span id="cvCiudad">
+                  Dirección / Ciudad
+                </span>
+              </div>
+
+              <div class="contacto-linea">
+                <span class="contacto-icono">☎</span>
+                <span id="cvTelefono">
+                  Teléfono
+                </span>
+              </div>
+
+              <div class="contacto-linea">
+                <span class="contacto-icono">✉</span>
+                <span id="cvEmail">
+                  Email
+                </span>
+              </div>
+
+            </div>
+
           </div>
-          <img id="fotoCV" src="" alt="Foto del candidato" style="display:none;">
+
+
+          <!-- FOTO -->
+
+          <div class="cv-foto">
+
+            <div
+              class="foto-placeholder"
+              id="fotoPlaceholder"
+            >
+              TU FOTO
+            </div>
+
+            <img
+              id="fotoCV"
+              src=""
+              alt="Foto"
+              style="display:none;"
+            >
+
+          </div>
+
         </div>
 
-        <div>
-          <h1 id="cvNombre">Tu nombre</h1>
-          <div class="puesto" id="cvPuesto">
-            Tu puesto profesional
+
+        <!-- =========================
+             RESUMEN PROFESIONAL
+             ========================= -->
+
+        <div class="cv-seccion">
+
+          <h2 class="cv-titulo-seccion">
+            Resumen profesional
+          </h2>
+
+          <p
+            class="cv-perfil"
+            id="cvPerfil"
+          >
+            Tu resumen profesional aparecerá aquí.
+          </p>
+
+        </div>
+
+
+        <!-- =========================
+             FORMACIÓN
+             ========================= -->
+
+        <div class="cv-seccion">
+
+          <h2 class="cv-titulo-seccion">
+            Formación
+          </h2>
+
+          <div id="cvFormacion">
+
+            <div class="cv-item">
+
+              <div class="cv-fecha">
+                09/2023 - 06/2024
+              </div>
+
+              <div class="cv-detalle">
+
+                <div class="cv-puesto-item">
+                  Formación académica
+                </div>
+
+                <div class="cv-empresa">
+                  Tus estudios aparecerán aquí
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
+
+        </div>
+
+
+        <!-- =========================
+             HISTORIAL LABORAL
+             ========================= -->
+
+        <div class="cv-seccion">
+
+          <h2 class="cv-titulo-seccion">
+            Historial laboral
+          </h2>
+
+          <div id="cvExperiencia">
+
+            <div class="cv-item">
+
+              <div class="cv-fecha">
+                Fecha
+              </div>
+
+              <div class="cv-detalle">
+
+                <div class="cv-puesto-item">
+                  Puesto profesional
+                </div>
+
+                <div class="cv-empresa">
+                  Empresa
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             APTITUDES
+             ========================= -->
+
+        <div class="cv-seccion">
+
+          <h2 class="cv-titulo-seccion">
+            Aptitudes
+          </h2>
+
+          <div
+            class="habilidades-grid"
+            id="cvHabilidades"
+          >
+
+            <div class="habilidad-item">
+              Capacidad de aprendizaje
+            </div>
+
+            <div class="habilidad-item">
+              Responsabilidad
+            </div>
+
+            <div class="habilidad-item">
+              Compromiso
+            </div>
+
+            <div class="habilidad-item">
+              Puntualidad y disciplina
+            </div>
+
+            <div class="habilidad-item">
+              Trabajo en equipo
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             IDIOMAS
+             ========================= -->
+
+        <div class="cv-seccion">
+
+          <h2 class="cv-titulo-seccion">
+            Idiomas
+          </h2>
+
+          <div
+            class="idiomas-grid"
+            id="cvIdiomas"
+          >
+
+            <div class="idioma">
+              <strong>Catalán:</strong>
+              <span> — </span>
+            </div>
+
+            <div class="idioma">
+              <strong>Castellano:</strong>
+              <span> — </span>
+            </div>
+
+            <div class="idioma">
+              <strong>Inglés:</strong>
+              <span> — </span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             INFORMACIÓN ADICIONAL
+             ========================= -->
+
+        <div class="cv-seccion">
+
+          <h2 class="cv-titulo-seccion">
+            Información adicional
+          </h2>
+
+          <ul
+            class="informacion-lista"
+            id="cvInformacion"
+          >
+
+            <li>
+              Información adicional
+            </li>
+
+          </ul>
+
         </div>
 
       </div>
 
-      <div class="cv-contacto" id="cvContacto">
-        Email · Teléfono · Ciudad
-      </div>
-
-      <div class="cv-body">
-
-        <div class="cv-seccion">
-          <h3>Perfil profesional</h3>
-          <p id="cvPerfil">Tu perfil aparecerá aquí.</p>
-        </div>
-
-        <div class="cv-seccion">
-          <h3>Experiencia laboral</h3>
-          <p id="cvExperiencia">Tu experiencia aparecerá aquí.</p>
-        </div>
-
-        <div class="cv-seccion">
-          <h3>Formación</h3>
-          <p id="cvFormacion">Tu formación aparecerá aquí.</p>
-        </div>
-
-        <div class="cv-seccion">
-          <h3>Habilidades</h3>
-          <div class="habilidades" id="cvHabilidades">
-            <span class="habilidad">Tus habilidades aparecerán aquí</span>
-          </div>
-        </div>
-
-      </div>
     </div>
+
   </div>
 
 </div>
@@ -385,7 +914,12 @@
 
 <script>
 
+  /* =====================================================
+     FOTO
+     ===================================================== */
+
   let fotoSeleccionada = "";
+
 
   function cargarFoto(event) {
 
@@ -397,118 +931,667 @@
 
     const lector = new FileReader();
 
+
     lector.onload = function(e) {
 
       fotoSeleccionada = e.target.result;
 
-      const fotoCV = document.getElementById("fotoCV");
-      const placeholder = document.getElementById("fotoPlaceholder");
+      const fotoCV =
+        document.getElementById("fotoCV");
+
+      const placeholder =
+        document.getElementById("fotoPlaceholder");
+
 
       fotoCV.src = fotoSeleccionada;
+
       fotoCV.style.display = "block";
+
       placeholder.style.display = "none";
+
     };
+
 
     lector.readAsDataURL(archivo);
   }
 
 
+  /* =====================================================
+     GENERAR CV
+     ===================================================== */
+
   function generarCV() {
 
     const nombre =
-      document.getElementById("nombre").value.trim();
+      document.getElementById("nombre")
+        .value
+        .trim();
 
-    const puesto =
-      document.getElementById("puesto").value.trim();
 
     const email =
-      document.getElementById("email").value.trim();
+      document.getElementById("email")
+        .value
+        .trim();
+
 
     const telefono =
-      document.getElementById("telefono").value.trim();
+      document.getElementById("telefono")
+        .value
+        .trim();
+
 
     const ciudad =
-      document.getElementById("ciudad").value.trim();
+      document.getElementById("ciudad")
+        .value
+        .trim();
+
 
     const perfil =
-      document.getElementById("perfil").value.trim();
+      document.getElementById("perfil")
+        .value
+        .trim();
+
 
     const experiencia =
-      document.getElementById("experiencia").value.trim();
+      document.getElementById("experiencia")
+        .value
+        .trim();
+
 
     const formacion =
-      document.getElementById("formacion").value.trim();
+      document.getElementById("formacion")
+        .value
+        .trim();
+
 
     const habilidades =
-      document.getElementById("habilidades").value.trim();
+      document.getElementById("habilidades")
+        .value
+        .trim();
 
 
-    document.getElementById("cvNombre").textContent =
-      nombre || "Tu nombre";
-
-    document.getElementById("cvPuesto").textContent =
-      puesto || "Tu puesto profesional";
-
-
-    document.getElementById("cvContacto").textContent =
-      (email || "Email") +
-      " · " +
-      (telefono || "Teléfono") +
-      " · " +
-      (ciudad || "Ciudad");
+    const idiomas =
+      document.getElementById("idiomas")
+        .value
+        .trim();
 
 
-    document.getElementById("cvPerfil").textContent =
-      perfil || "Tu perfil aparecerá aquí.";
+    const informacion =
+      document.getElementById("informacion")
+        .value
+        .trim();
 
 
-    document.getElementById("cvExperiencia").textContent =
-      experiencia || "Tu experiencia aparecerá aquí.";
+    /* =========================
+       NOMBRE
+       ========================= */
+
+    const nombreCV =
+      document.getElementById("cvNombre");
 
 
-    document.getElementById("cvFormacion").textContent =
-      formacion || "Tu formación aparecerá aquí.";
+    if (nombre) {
 
+      const palabras =
+        nombre.split(" ");
 
-    const contenedorHabilidades =
-      document.getElementById("cvHabilidades");
+      if (palabras.length > 1) {
 
-    contenedorHabilidades.innerHTML = "";
+        const apellido =
+          palabras.pop();
 
-    if (habilidades) {
+        const nombreParte =
+          palabras.join(" ");
 
-      const lista = habilidades
-        .split(",")
-        .map(h => h.trim())
-        .filter(h => h !== "");
+        nombreCV.innerHTML =
+          nombreParte.toUpperCase() +
+          " <strong>" +
+          apellido.toUpperCase() +
+          "</strong>";
 
-      lista.forEach(habilidad => {
+      } else {
 
-        const elemento =
-          document.createElement("span");
+        nombreCV.textContent =
+          nombre.toUpperCase();
 
-        elemento.className = "habilidad";
-        elemento.textContent = habilidad;
-
-        contenedorHabilidades.appendChild(elemento);
-
-      });
+      }
 
     } else {
 
-      const elemento =
-        document.createElement("span");
+      nombreCV.innerHTML =
+        'ÁNGEL <strong>MARTÍN</strong>';
 
-      elemento.className = "habilidad";
-      elemento.textContent =
-        "Tus habilidades aparecerán aquí";
-
-      contenedorHabilidades.appendChild(elemento);
     }
+
+
+    /* =========================
+       CONTACTO
+       ========================= */
+
+    document.getElementById("cvCiudad")
+      .textContent =
+      ciudad || "Dirección / Ciudad";
+
+
+    document.getElementById("cvTelefono")
+      .textContent =
+      telefono || "Teléfono";
+
+
+    document.getElementById("cvEmail")
+      .textContent =
+      email || "Email";
+
+
+    /* =========================
+       PERFIL
+       ========================= */
+
+    document.getElementById("cvPerfil")
+      .textContent =
+      perfil ||
+      "Tu resumen profesional aparecerá aquí.";
+
+
+    /* =========================
+       EXPERIENCIA
+       ========================= */
+
+    generarExperiencia(experiencia);
+
+
+    /* =========================
+       FORMACIÓN
+       ========================= */
+
+    generarFormacion(formacion);
+
+
+    /* =========================
+       HABILIDADES
+       ========================= */
+
+    generarHabilidades(habilidades);
+
+
+    /* =========================
+       IDIOMAS
+       ========================= */
+
+    generarIdiomas(idiomas);
+
+
+    /* =========================
+       INFORMACIÓN
+       ========================= */
+
+    generarInformacion(informacion);
+
+  }
+
+
+  /* =====================================================
+     EXPERIENCIA
+     ===================================================== */
+
+  function generarExperiencia(texto) {
+
+    const contenedor =
+      document.getElementById("cvExperiencia");
+
+
+    contenedor.innerHTML = "";
+
+
+    if (!texto) {
+
+      contenedor.innerHTML = `
+        <div class="cv-item">
+
+          <div class="cv-fecha">
+            Fecha
+          </div>
+
+          <div class="cv-detalle">
+
+            <div class="cv-puesto-item">
+              Puesto profesional
+            </div>
+
+            <div class="cv-empresa">
+              Empresa
+            </div>
+
+          </div>
+
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const bloques =
+      texto
+        .split(/\n\s*\n/)
+        .filter(b => b.trim() !== "");
+
+
+    bloques.forEach(bloque => {
+
+      const lineas =
+        bloque
+          .split("\n")
+          .map(l => l.trim())
+          .filter(l => l !== "");
+
+
+      if (lineas.length === 0) {
+        return;
+      }
+
+
+      const fecha =
+        lineas[0] || "";
+
+
+      const puesto =
+        lineas[1] || "";
+
+
+      const empresa =
+        lineas[2] || "";
+
+
+      const tareas =
+        lineas
+          .slice(3)
+          .filter(linea =>
+            linea.startsWith("•") ||
+            linea.startsWith("-")
+          );
+
+
+      const div =
+        document.createElement("div");
+
+      div.className = "cv-item";
+
+
+      let tareasHTML = "";
+
+
+      if (tareas.length > 0) {
+
+        tareasHTML = "<ul>";
+
+        tareas.forEach(tarea => {
+
+          tareasHTML +=
+            `<li>${escaparHTML(
+              tarea.replace(/^[•-]\s*/, "")
+            )}</li>`;
+
+        });
+
+        tareasHTML += "</ul>";
+      }
+
+
+      div.innerHTML = `
+
+        <div class="cv-fecha">
+          ${escaparHTML(fecha)}
+        </div>
+
+        <div class="cv-detalle">
+
+          <div class="cv-puesto-item">
+            ${escaparHTML(puesto)}
+          </div>
+
+          <div class="cv-empresa">
+            ${escaparHTML(empresa)}
+          </div>
+
+          ${tareasHTML}
+
+        </div>
+
+      `;
+
+
+      contenedor.appendChild(div);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     FORMACIÓN
+     ===================================================== */
+
+  function generarFormacion(texto) {
+
+    const contenedor =
+      document.getElementById("cvFormacion");
+
+
+    contenedor.innerHTML = "";
+
+
+    if (!texto) {
+
+      contenedor.innerHTML = `
+        <div class="cv-item">
+
+          <div class="cv-fecha">
+            Fecha
+          </div>
+
+          <div class="cv-detalle">
+
+            <div class="cv-puesto-item">
+              Formación académica
+            </div>
+
+            <div class="cv-empresa">
+              Tus estudios aparecerán aquí
+            </div>
+
+          </div>
+
+        </div>
+      `;
+
+      return;
+    }
+
+
+    const bloques =
+      texto
+        .split(/\n\s*\n/)
+        .filter(b => b.trim() !== "");
+
+
+    bloques.forEach(bloque => {
+
+      const lineas =
+        bloque
+          .split("\n")
+          .map(l => l.trim())
+          .filter(l => l !== "");
+
+
+      if (lineas.length === 0) {
+        return;
+      }
+
+
+      const fecha =
+        lineas[0] || "";
+
+
+      const titulo =
+        lineas[1] || "";
+
+
+      const centro =
+        lineas.slice(2).join(" ");
+
+
+      const div =
+        document.createElement("div");
+
+      div.className = "cv-item";
+
+
+      div.innerHTML = `
+
+        <div class="cv-fecha">
+          ${escaparHTML(fecha)}
+        </div>
+
+        <div class="cv-detalle">
+
+          <div class="cv-puesto-item">
+            ${escaparHTML(titulo)}
+          </div>
+
+          <div class="cv-empresa">
+            ${escaparHTML(centro)}
+          </div>
+
+        </div>
+
+      `;
+
+
+      contenedor.appendChild(div);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     HABILIDADES
+     ===================================================== */
+
+  function generarHabilidades(texto) {
+
+    const contenedor =
+      document.getElementById("cvHabilidades");
+
+
+    contenedor.innerHTML = "";
+
+
+    if (!texto) {
+
+      const habilidadesDefault = [
+        "Capacidad de aprendizaje",
+        "Responsabilidad",
+        "Compromiso",
+        "Puntualidad y disciplina",
+        "Trabajo en equipo"
+      ];
+
+
+      habilidadesDefault.forEach(habilidad => {
+
+        const div =
+          document.createElement("div");
+
+        div.className =
+          "habilidad-item";
+
+        div.textContent =
+          habilidad;
+
+        contenedor.appendChild(div);
+
+      });
+
+      return;
+    }
+
+
+    let lista;
+
+
+    /*
+      Permite introducir habilidades separadas
+      por comas o por saltos de línea.
+    */
+
+    lista =
+      texto
+        .split(/[,\n]/)
+        .map(h => h.trim())
+        .filter(h => h !== "");
+
+
+    lista.forEach(habilidad => {
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "habilidad-item";
+
+      div.textContent =
+        habilidad;
+
+      contenedor.appendChild(div);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     IDIOMAS
+     ===================================================== */
+
+  function generarIdiomas(texto) {
+
+    const contenedor =
+      document.getElementById("cvIdiomas");
+
+
+    contenedor.innerHTML = "";
+
+
+    if (!texto) {
+
+      contenedor.innerHTML = `
+
+        <div class="idioma">
+          <strong>Catalán:</strong> —
+        </div>
+
+        <div class="idioma">
+          <strong>Castellano:</strong> —
+        </div>
+
+        <div class="idioma">
+          <strong>Inglés:</strong> —
+        </div>
+
+      `;
+
+      return;
+    }
+
+
+    const lineas =
+      texto
+        .split("\n")
+        .map(l => l.trim())
+        .filter(l => l !== "");
+
+
+    lineas.forEach(linea => {
+
+      const partes =
+        linea.split(":");
+
+
+      let idioma =
+        partes[0] || "";
+
+
+      let nivel =
+        partes.slice(1).join(":").trim();
+
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "idioma";
+
+
+      div.innerHTML =
+        `<strong>${escaparHTML(idioma)}:</strong> ` +
+        `${escaparHTML(nivel)}`;
+
+
+      contenedor.appendChild(div);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     INFORMACIÓN ADICIONAL
+     ===================================================== */
+
+  function generarInformacion(texto) {
+
+    const contenedor =
+      document.getElementById("cvInformacion");
+
+
+    contenedor.innerHTML = "";
+
+
+    if (!texto) {
+
+      const li =
+        document.createElement("li");
+
+      li.textContent =
+        "Información adicional";
+
+      contenedor.appendChild(li);
+
+      return;
+    }
+
+
+    const lineas =
+      texto
+        .split("\n")
+        .map(l => l.trim())
+        .filter(l => l !== "");
+
+
+    lineas.forEach(linea => {
+
+      const li =
+        document.createElement("li");
+
+      li.textContent =
+        linea.replace(/^[•-]\s*/, "");
+
+      contenedor.appendChild(li);
+
+    });
+
+  }
+
+
+  /* =====================================================
+     SEGURIDAD HTML
+     ===================================================== */
+
+  function escaparHTML(texto) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent =
+      texto;
+
+    return div.innerHTML;
+
   }
 
 </script>
 
 </body>
 </html>
-```
