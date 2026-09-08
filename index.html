@@ -125,6 +125,22 @@
       }
     }
   </style>
+  .btn-guardar {
+    display: block;
+    margin: 20px auto 0;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-guardar:hover {
+    background: #1d4ed8;
+}
 </head>
 
 <body>
@@ -164,7 +180,7 @@
     <textarea id="habilidades" placeholder="Ej: Atención al cliente, trabajo en equipo, informática"></textarea>
 
     <button onclick="generarCV()">Generar mi CV</button>
-     <button onclick="window.print()">Descargar / Guardar CV en PDF</button>
+    <button class="btn-guardar" onclick="window.print()">💾 Guardar PDF</button>
 
   </div>
  
