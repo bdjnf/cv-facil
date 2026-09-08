@@ -1,275 +1,514 @@
-Aquí tienes el código HTML/JS adaptado que debes copiar y pegar en tu proyecto. Incluye la interfaz lista, la conexión con las rutas de tu backend y la exportación en PDF.
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CV Inteligente - Creador de CV</title>
-  
-  <!-- Librería para descargar PDF directo -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <title>CV Fácil - Crea tu currículum</title>
 
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #1a1a1a; display: flex; flex-direction: column; min-height: 100vh; }
-    header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 30px 20px; text-align: center; }
-    header h1 { margin: 0 0 6px; font-size: 32px; }
-    header p { margin: 0; font-size: 15px; color: #94a3b8; }
+    * {
+      box-sizing: border-box;
+    }
 
-    .container { max-width: 1250px; margin: 25px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1.15fr; gap: 25px; flex: 1; }
-    .box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
 
-    .form-group { margin-bottom: 15px; }
-    .label-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-    label { font-weight: 600; font-size: 12px; color: #334155; text-transform: uppercase; }
-    input, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-family: inherit; }
-    textarea { min-height: 80px; resize: vertical; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    header {
+      background: #111827;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
 
-    .btn-ia { background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: white; border: none; padding: 4px 10px; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: 600; }
-    .btn-ia:disabled { opacity: 0.6; cursor: not-allowed; }
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 40px;
+    }
 
-    .dynamic-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; margin-bottom: 10px; position: relative; }
-    .btn-eliminar { background: #ef4444; color: white; border: none; padding: 3px 6px; border-radius: 4px; font-size: 10px; cursor: pointer; position: absolute; top: 8px; right: 8px; }
-    .btn-agregar { background: #e2e8f0; border: 1px dashed #cbd5e1; width: 100%; padding: 8px; border-radius: 6px; font-weight: 600; cursor: pointer; color: #334155; }
+    header p {
+      margin: 0;
+      font-size: 18px;
+    }
 
-    .btn-primary { width: 100%; padding: 12px; border: none; border-radius: 6px; background: #0f172a; color: white; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-    .btn-primary:hover { background: #1e293b; }
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 25px;
+    }
 
-    /* Estilos CV Vista Previa */
-    #cv { background: white; min-height: 800px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .cv-header { background: #2563eb; color: white; padding: 30px; display: flex; align-items: center; gap: 20px; }
-    .foto-container { width: 90px; height: 90px; border-radius: 50%; overflow: hidden; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 11px; border: 2px solid white; flex-shrink: 0; }
-    .foto-container img { width: 100%; height: 100%; object-fit: cover; }
-    .cv-header h1 { margin: 0; font-size: 24px; }
-    .cv-contacto { padding: 10px 30px; background: #f8fafc; font-size: 12px; border-bottom: 1px solid #e2e8f0; color: #475569; }
-    .cv-body { padding: 25px; }
-    .cv-seccion { margin-bottom: 20px; }
-    .cv-seccion h3 { color: #2563eb; font-size: 15px; margin: 0 0 10px; border-bottom: 2px solid #2563eb; padding-bottom: 4px; text-transform: uppercase; }
-    .habilidades { display: flex; flex-wrap: wrap; gap: 6px; }
-    .habilidad { background: #f1f5f9; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; color: #334155; }
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
 
-    footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 20px; font-size: 12px; margin-top: 30px; }
+    h2 {
+      margin-top: 0;
+      color: #111827;
+    }
 
-    @media (max-width: 850px) { .container { grid-template-columns: 1fr; } }
-    @media print { body { background: white; } header, .formulario, footer { display: none !important; } .container { display: block; margin: 0; padding: 0; } #cv { border: none; box-shadow: none; } }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      font-size: 15px;
+      font-family: Arial, sans-serif;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    input[type="file"] {
+      padding: 9px;
+      background: #f9fafb;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: 0;
+      border-radius: 7px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-guardar {
+      background: #111827;
+    }
+
+    .btn-guardar:hover {
+      background: #374151;
+    }
+
+    /* =========================
+       PLANTILLA DEL CV
+       ========================= */
+
+    #cv {
+      background: white;
+      min-height: 700px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .cv-header {
+      background: #2563eb;
+      color: white;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .foto-container {
+      width: 115px;
+      height: 115px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      background: white;
+      border: 4px solid rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .foto-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .foto-placeholder {
+      color: #2563eb;
+      font-size: 13px;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .cv-header h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+    }
+
+    .cv-header .puesto {
+      font-size: 17px;
+      opacity: 0.95;
+    }
+
+    .cv-contacto {
+      padding: 15px 30px;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 14px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cv-body {
+      padding: 30px;
+    }
+
+    .cv-seccion {
+      margin-bottom: 28px;
+    }
+
+    .cv-seccion h3 {
+      color: #2563eb;
+      font-size: 18px;
+      margin: 0 0 10px;
+      padding-bottom: 7px;
+      border-bottom: 2px solid #2563eb;
+    }
+
+    .cv-seccion p {
+      margin: 0;
+      line-height: 1.6;
+      white-space: pre-line;
+      color: #444;
+    }
+
+    .habilidades {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .habilidad {
+      background: #e5edff;
+      color: #1d4ed8;
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      header h1 {
+        font-size: 30px;
+      }
+
+      .cv-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .cv-header h1 {
+        font-size: 26px;
+      }
+
+      .cv-body {
+        padding: 20px;
+      }
+    }
+
+    /* =========================
+       IMPRESIÓN / PDF
+       ========================= */
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      header,
+      .formulario,
+      .vista-titulo {
+        display: none !important;
+      }
+
+      .container {
+        display: block;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .box {
+        box-shadow: none;
+        padding: 0;
+      }
+
+      #cv {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        min-height: auto;
+      }
+    }
   </style>
 </head>
+
 <body>
 
 <header>
-  <h1>CV Inteligente</h1>
-  <p>Crea tu currículum profesional con optimización por IA</p>
+  <h1>CV Fácil</h1>
+  <p>Crea tu currículum profesional gratis</p>
 </header>
 
 <div class="container">
-  <!-- FORMULARIO DE DATOS -->
+
+  <!-- FORMULARIO -->
   <div class="box formulario">
-    <h2>Tus Datos</h2>
+    <h2>Datos de tu CV</h2>
 
-    <div class="form-group">
-      <label for="nombre">Nombre completo</label>
-      <input id="nombre" placeholder="Ej: Juan García" oninput="actualizarCV()">
-    </div>
+    <label for="nombre">Nombre completo</label>
+    <input id="nombre" placeholder="Ej: Juan García">
 
-    <div class="row">
-      <div class="form-group">
-        <label for="puesto">Puesto profesional</label>
-        <input id="puesto" placeholder="Ej: Desarrollador Web" oninput="actualizarCV()">
-      </div>
-      <div class="form-group">
-        <label for="foto">Foto</label>
-        <input id="foto" type="file" accept="image/*" onchange="cargarFoto(event)">
-      </div>
-    </div>
+    <label for="puesto">Puesto profesional</label>
+    <input id="puesto" placeholder="Ej: Administrativo">
 
-    <div class="row">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input id="email" type="email" placeholder="juan@email.com" oninput="actualizarCV()">
-      </div>
-      <div class="form-group">
-        <label for="telefono">Teléfono</label>
-        <input id="telefono" placeholder="+34 600 000 000" oninput="actualizarCV()">
-      </div>
-    </div>
+    <label for="foto">Foto</label>
+    <input id="foto" type="file" accept="image/*" onchange="cargarFoto(event)">
 
-    <div class="form-group">
-      <label for="ciudad">Ciudad</label>
-      <input id="ciudad" placeholder="Madrid, España" oninput="actualizarCV()">
-    </div>
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="Ej: juan@email.com">
 
-    <div class="form-group">
-      <div class="label-container">
-        <label for="perfil">Perfil profesional</label>
-        <button class="btn-ia" id="btn-optimizar" onclick="optimizarPerfilConIA()">✨ Optimizar con IA</button>
-      </div>
-      <textarea id="perfil" placeholder="Escribe un resumen sobre ti..." oninput="actualizarCV()"></textarea>
-    </div>
+    <label for="telefono">Teléfono</label>
+    <input id="telefono" placeholder="Ej: 600 123 456">
 
-    <div class="form-group">
-      <label>Experiencia Laboral</label>
-      <div id="lista-experiencia"></div>
-      <button class="btn-agregar" onclick="agregarExperiencia()">+ Añadir Experiencia</button>
-    </div>
+    <label for="ciudad">Ciudad</label>
+    <input id="ciudad" placeholder="Ej: Barcelona">
 
-    <div class="form-group">
-      <div class="label-container">
-        <label for="habilidades">Habilidades</label>
-        <button class="btn-ia" id="btn-habilidades" onclick="sugerirHabilidadesConIA()">✨ Sugerir Habilidades</button>
-      </div>
-      <textarea id="habilidades" placeholder="Separadas por comas (ej: HTML, CSS, Trabajo en equipo)" oninput="actualizarCV()"></textarea>
-    </div>
+    <label for="perfil">Perfil profesional</label>
+    <textarea id="perfil" placeholder="Escribe una breve descripción sobre ti"></textarea>
 
-    <button class="btn-primary" onclick="exportarPDF()">💾 Descargar PDF</button>
+    <label for="experiencia">Experiencia laboral</label>
+    <textarea id="experiencia" placeholder="Empresa, puesto, años y principales tareas"></textarea>
+
+    <label for="formacion">Formación</label>
+    <textarea id="formacion" placeholder="Estudios, cursos, títulos..."></textarea>
+
+    <label for="habilidades">Habilidades</label>
+    <textarea id="habilidades" placeholder="Ej: Atención al cliente, trabajo en equipo, informática"></textarea>
+
+    <button onclick="generarCV()">Generar mi CV</button>
+
+    <button class="btn-guardar" onclick="window.print()">
+      💾 Guardar PDF
+    </button>
   </div>
 
-  <!-- VISTA PREVIA DEL CV -->
+
+  <!-- VISTA PREVIA -->
   <div class="box">
-    <h2>Vista Previa</h2>
+    <h2 class="vista-titulo">Vista previa</h2>
+
     <div id="cv">
+
       <div class="cv-header">
+
         <div class="foto-container">
-          <span id="fotoPlaceholder">Sin foto</span>
-          <img id="fotoCV" src="" style="display:none;" alt="Foto del candidato">
+          <div class="foto-placeholder" id="fotoPlaceholder">
+            Tu foto
+          </div>
+          <img id="fotoCV" src="" alt="Foto del candidato" style="display:none;">
         </div>
+
         <div>
-          <h1 id="cvNombre">Tu Nombre</h1>
-          <div id="cvPuesto" style="opacity:0.9;">Tu Puesto</div>
+          <h1 id="cvNombre">Tu nombre</h1>
+          <div class="puesto" id="cvPuesto">
+            Tu puesto profesional
+          </div>
         </div>
+
       </div>
-      <div class="cv-contacto" id="cvContacto">email@ejemplo.com · +34 000 000 000 · Ciudad</div>
+
+      <div class="cv-contacto" id="cvContacto">
+        Email · Teléfono · Ciudad
+      </div>
+
       <div class="cv-body">
+
         <div class="cv-seccion">
-          <h3>Perfil Profesional</h3>
-          <p id="cvPerfil" style="white-space: pre-line; margin: 0; font-size: 13px; color: #334155;"></p>
+          <h3>Perfil profesional</h3>
+          <p id="cvPerfil">Tu perfil aparecerá aquí.</p>
         </div>
+
         <div class="cv-seccion">
-          <h3>Experiencia Laboral</h3>
-          <div id="cvExperiencia"></div>
+          <h3>Experiencia laboral</h3>
+          <p id="cvExperiencia">Tu experiencia aparecerá aquí.</p>
         </div>
+
+        <div class="cv-seccion">
+          <h3>Formación</h3>
+          <p id="cvFormacion">Tu formación aparecerá aquí.</p>
+        </div>
+
         <div class="cv-seccion">
           <h3>Habilidades</h3>
-          <div class="habilidades" id="cvHabilidades"></div>
+          <div class="habilidades" id="cvHabilidades">
+            <span class="habilidad">Tus habilidades aparecerán aquí</span>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
+
 </div>
 
-<footer>
-  <p>© CV Inteligente — Todos los datos se procesan en memoria sin almacenarse en bases de datos (RGPD Compliance).</p>
-</footer>
 
 <script>
-  // Cambia la URL si despliegas el backend en producción (ej: 'https://mi-servidor.com/api/ia')
-  const API_URL = 'http://localhost:3000/api/ia';
 
-  document.addEventListener("DOMContentLoaded", () => {
-    agregarExperiencia();
-    actualizarCV();
-  });
+  let fotoSeleccionada = "";
 
-  function cargarFoto(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      document.getElementById("fotoCV").src = event.target.result;
-      document.getElementById("fotoCV").style.display = "block";
-      document.getElementById("fotoPlaceholder").style.display = "none";
+  function cargarFoto(event) {
+
+    const archivo = event.target.files[0];
+
+    if (!archivo) {
+      return;
+    }
+
+    const lector = new FileReader();
+
+    lector.onload = function(e) {
+
+      fotoSeleccionada = e.target.result;
+
+      const fotoCV = document.getElementById("fotoCV");
+      const placeholder = document.getElementById("fotoPlaceholder");
+
+      fotoCV.src = fotoSeleccionada;
+      fotoCV.style.display = "block";
+      placeholder.style.display = "none";
     };
-    reader.readAsDataURL(file);
+
+    lector.readAsDataURL(archivo);
   }
 
-  function agregarExperiencia() {
-    const id = Date.now();
-    const html = `
-      <div class="dynamic-item" id="exp-${id}">
-        <button class="btn-eliminar" onclick="document.getElementById('exp-${id}').remove(); actualizarCV();">✕</button>
-        <input placeholder="Puesto / Cargo" class="exp-puesto" oninput="actualizarCV()" style="margin-bottom:5px;">
-        <div class="row">
-          <input placeholder="Empresa" class="exp-empresa" oninput="actualizarCV()">
-          <input placeholder="Año/Periodo" class="exp-periodo" oninput="actualizarCV()">
-        </div>
-      </div>`;
-    document.getElementById("lista-experiencia").insertAdjacentHTML('beforeend', html);
-  }
 
-  function actualizarCV() {
-    document.getElementById("cvNombre").textContent = document.getElementById("nombre").value || "Tu Nombre";
-    document.getElementById("cvPuesto").textContent = document.getElementById("puesto").value || "Tu Puesto";
-    document.getElementById("cvContacto").textContent = `${document.getElementById("email").value || "Email"} · ${document.getElementById("telefono").value || "Teléfono"} · ${document.getElementById("ciudad").value || "Ciudad"}`;
-    document.getElementById("cvPerfil").textContent = document.getElementById("perfil").value || "Tu extracto profesional aparecerá aquí...";
+  function generarCV() {
 
-    const expCont = document.getElementById("cvExperiencia");
-    expCont.innerHTML = "";
-    document.querySelectorAll(".dynamic-item").forEach(item => {
-      const p = item.querySelector(".exp-puesto").value;
-      const e = item.querySelector(".exp-empresa").value;
-      const t = item.querySelector(".exp-periodo").value;
-      if(p || e) {
-        expCont.innerHTML += `<div style="margin-bottom:8px; font-size:13px; color:#1e293b;"><strong>${p}</strong> - ${e} <span style="color:#64748b;">(${t})</span></div>`;
-      }
-    });
+    const nombre =
+      document.getElementById("nombre").value.trim();
 
-    const habCont = document.getElementById("cvHabilidades");
-    habCont.innerHTML = "";
-    const habs = document.getElementById("habilidades").value.split(",").filter(h => h.trim() !== "");
-    habs.forEach(h => {
-      habCont.innerHTML += `<span class="habilidad">${h.trim()}</span>`;
-    });
-  }
+    const puesto =
+      document.getElementById("puesto").value.trim();
 
-  async function optimizarPerfilConIA() {
-    const perfil = document.getElementById("perfil").value;
-    const puesto = document.getElementById("puesto").value;
-    if(!perfil) return alert("Escribe un borrador de tu perfil primero.");
+    const email =
+      document.getElementById("email").value.trim();
 
-    const btn = document.getElementById("btn-optimizar");
-    btn.disabled = true; btn.textContent = "⏳ Procesando...";
+    const telefono =
+      document.getElementById("telefono").value.trim();
 
-    try {
-      const res = await fetch(`${API_URL}/optimizar-perfil`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ perfil, puesto })
+    const ciudad =
+      document.getElementById("ciudad").value.trim();
+
+    const perfil =
+      document.getElementById("perfil").value.trim();
+
+    const experiencia =
+      document.getElementById("experiencia").value.trim();
+
+    const formacion =
+      document.getElementById("formacion").value.trim();
+
+    const habilidades =
+      document.getElementById("habilidades").value.trim();
+
+
+    document.getElementById("cvNombre").textContent =
+      nombre || "Tu nombre";
+
+    document.getElementById("cvPuesto").textContent =
+      puesto || "Tu puesto profesional";
+
+
+    document.getElementById("cvContacto").textContent =
+      (email || "Email") +
+      " · " +
+      (telefono || "Teléfono") +
+      " · " +
+      (ciudad || "Ciudad");
+
+
+    document.getElementById("cvPerfil").textContent =
+      perfil || "Tu perfil aparecerá aquí.";
+
+
+    document.getElementById("cvExperiencia").textContent =
+      experiencia || "Tu experiencia aparecerá aquí.";
+
+
+    document.getElementById("cvFormacion").textContent =
+      formacion || "Tu formación aparecerá aquí.";
+
+
+    const contenedorHabilidades =
+      document.getElementById("cvHabilidades");
+
+    contenedorHabilidades.innerHTML = "";
+
+    if (habilidades) {
+
+      const lista = habilidades
+        .split(",")
+        .map(h => h.trim())
+        .filter(h => h !== "");
+
+      lista.forEach(habilidad => {
+
+        const elemento =
+          document.createElement("span");
+
+        elemento.className = "habilidad";
+        elemento.textContent = habilidad;
+
+        contenedorHabilidades.appendChild(elemento);
+
       });
-      const data = await res.json();
-      if(res.ok) {
-        document.getElementById("perfil").value = data.resultado;
-        actualizarCV();
-      } else { alert(data.error); }
-    } catch(err) { alert("Error al conectar con el servidor."); }
-    finally { btn.disabled = false; btn.textContent = "✨ Optimizar con IA"; }
+
+    } else {
+
+      const elemento =
+        document.createElement("span");
+
+      elemento.className = "habilidad";
+      elemento.textContent =
+        "Tus habilidades aparecerán aquí";
+
+      contenedorHabilidades.appendChild(elemento);
+    }
   }
 
-  async function sugerirHabilidadesConIA() {
-    const puesto = document.getElementById("puesto").value;
-    if(!puesto) return alert("Escribe tu puesto profesional primero.");
-
-    const btn = document.getElementById("btn-habilidades");
-    btn.disabled = true; btn.textContent = "⏳ Cargando...";
-
-    try {
-      const res = await fetch(`${API_URL}/sugerir-habilidades`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ puesto })
-      });
-      const data = await res.json();
-      if(res.ok) {
-        document.getElementById("habilidades").value = data.habilidades;
-        actualizarCV();
-      } else { alert(data.error); }
-    } catch(err) { alert("Error al conectar con el servidor."); }
-    finally { btn.disabled = false; btn.textContent = "✨ Sugerir Habilidades"; }
-  }
-
-  function exportarPDF() {
-    html2pdf().set({ margin: 0, filename: 'Mi_CV.pdf', html2canvas: { scale: 2 } }).from(document.getElementById("cv")).save();
-  }
 </script>
 
 </body>
 </html>
+```
