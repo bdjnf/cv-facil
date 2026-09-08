@@ -35,7 +35,7 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 30px auto;
       padding: 20px;
       display: grid;
@@ -92,27 +92,146 @@
       background: #1d4ed8;
     }
 
+    /* BOTÓN GUARDAR */
+    .btn-guardar {
+      display: block;
+      margin: 20px auto 0;
+      background: #2563eb;
+    }
+
+    .btn-guardar:hover {
+      background: #1d4ed8;
+    }
+
+    /* =========================
+       PLANTILLA DEL CV
+       ========================= */
+
     #cv {
-      min-height: 600px;
-      border: 1px solid #ddd;
-      padding: 30px;
+      min-height: 700px;
       background: white;
+      border: 1px solid #ddd;
+      position: relative;
+      overflow: hidden;
     }
 
-    #cv h1 {
-      margin-top: 0;
-      color: #111827;
+    .cv-top {
+      height: 8px;
+      background: #2563eb;
     }
 
-    #cv h3 {
+    .cv-header {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 25px;
+      padding: 30px;
+      align-items: center;
+    }
+
+    .cv-name {
+      margin: 0;
+      font-size: 32px;
+      color: #12345b;
+    }
+
+    .cv-job {
+      margin: 8px 0 20px;
       color: #2563eb;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
+      font-size: 17px;
+      font-weight: bold;
+      text-transform: uppercase;
     }
 
-    .contact {
+    .cv-contact {
       color: #555;
-      margin-bottom: 25px;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .cv-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 4px solid #e5efff;
+    }
+
+    .cv-photo-placeholder {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      background: #eaf2ff;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+      padding: 15px;
+    }
+
+    .cv-content {
+      padding: 0 30px 30px;
+    }
+
+    .cv-section {
+      margin-top: 25px;
+    }
+
+    .cv-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #2563eb;
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid #bcd3f5;
+      padding-bottom: 7px;
+    }
+
+    .cv-section p {
+      line-height: 1.6;
+      white-space: pre-line;
+      color: #333;
+    }
+
+    .cv-layout {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 30px;
+    }
+
+    .cv-sidebar {
+      background: #f0f7ff;
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .cv-sidebar h3 {
+      color: #12345b;
+      margin-top: 0;
+    }
+
+    .skill {
+      margin-bottom: 15px;
+    }
+
+    .skill-name {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .skill-bar {
+      height: 7px;
+      background: #d5e4f7;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      width: 80%;
+      background: #2563eb;
     }
 
     @media (max-width: 700px) {
@@ -123,24 +242,44 @@
       header h1 {
         font-size: 30px;
       }
+
+      .cv-header {
+        grid-template-columns: 1fr;
+      }
+
+      .cv-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =========================
+       SOLO IMPRIMIR EL CV
+       ========================= */
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      body * {
+        visibility: hidden;
+      }
+
+      #cv,
+      #cv * {
+        visibility: visible;
+      }
+
+      #cv {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+      }
     }
   </style>
-  .btn-guardar {
-    display: block;
-    margin: 20px auto 0;
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.btn-guardar:hover {
-    background: #1d4ed8;
-}
 </head>
 
 <body>
@@ -152,11 +291,19 @@
 
 <div class="container">
 
+  <!-- FORMULARIO -->
   <div class="box">
+
     <h2>Datos de tu CV</h2>
+
+    <label>Foto</label>
+    <input type="file" id="foto" accept="image/*">
 
     <label>Nombre completo</label>
     <input id="nombre" placeholder="Ej: Juan García">
+
+    <label>Puesto de trabajo</label>
+    <input id="puesto" placeholder="Ej: Técnico Informático">
 
     <label>Email</label>
     <input id="email" placeholder="Ej: juan@email.com">
@@ -180,40 +327,110 @@
     <textarea id="habilidades" placeholder="Ej: Atención al cliente, trabajo en equipo, informática"></textarea>
 
     <button onclick="generarCV()">Generar mi CV</button>
-    <button class="btn-guardar" onclick="window.print()">💾 Guardar PDF</button>
 
   </div>
- 
+
+
+  <!-- VISTA PREVIA -->
   <div class="box">
+
     <h2>Vista previa</h2>
 
     <div id="cv">
-      <h1>Tu nombre</h1>
 
-      <div class="contact">
-        Email · Teléfono · Ciudad
+      <div class="cv-top"></div>
+
+      <div class="cv-header">
+
+        <div>
+          <h1 class="cv-name">Tu nombre</h1>
+
+          <div class="cv-job">
+            Puesto de trabajo
+          </div>
+
+          <div class="cv-contact">
+            📧 Email · 📞 Teléfono · 📍 Ciudad
+          </div>
+        </div>
+
+        <div id="fotoPreview">
+          <div class="cv-photo-placeholder">
+            Añade tu foto
+          </div>
+        </div>
+
       </div>
 
-      <h3>Perfil profesional</h3>
-      <p>Tu perfil aparecerá aquí.</p>
 
-      <h3>Experiencia laboral</h3>
-      <p>Tu experiencia aparecerá aquí.</p>
+      <div class="cv-layout">
 
-      <h3>Formación</h3>
-      <p>Tu formación aparecerá aquí.</p>
+        <div class="cv-content">
 
-      <h3>Habilidades</h3>
-      <p>Tus habilidades aparecerán aquí.</p>
+          <div class="cv-section">
+            <div class="cv-section-title">
+              👤 Perfil profesional
+            </div>
+
+            <p id="previewPerfil">
+              Tu perfil aparecerá aquí.
+            </p>
+          </div>
+
+
+          <div class="cv-section">
+            <div class="cv-section-title">
+              💼 Experiencia laboral
+            </div>
+
+            <p id="previewExperiencia">
+              Tu experiencia aparecerá aquí.
+            </p>
+          </div>
+
+
+          <div class="cv-section">
+            <div class="cv-section-title">
+              🎓 Formación académica
+            </div>
+
+            <p id="previewFormacion">
+              Tu formación aparecerá aquí.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="cv-sidebar">
+
+          <h3>🛠️ Habilidades</h3>
+
+          <p id="previewHabilidades">
+            Tus habilidades aparecerán aquí.
+          </p>
+
+        </div>
+
+      </div>
+
     </div>
+
+    <button class="btn-guardar" onclick="window.print()">
+      💾 Guardar PDF
+    </button>
+
   </div>
 
 </div>
 
+
 <script>
+
 function generarCV() {
 
   const nombre = document.getElementById("nombre").value;
+  const puesto = document.getElementById("puesto").value;
   const email = document.getElementById("email").value;
   const telefono = document.getElementById("telefono").value;
   const ciudad = document.getElementById("ciudad").value;
@@ -222,28 +439,59 @@ function generarCV() {
   const formacion = document.getElementById("formacion").value;
   const habilidades = document.getElementById("habilidades").value;
 
-  document.getElementById("cv").innerHTML = `
-    <h1>${nombre || "Tu nombre"}</h1>
+  document.querySelector(".cv-name").textContent =
+    nombre || "Tu nombre";
 
-    <div class="contact">
-      ${email || "Email"} ·
-      ${telefono || "Teléfono"} ·
-      ${ciudad || "Ciudad"}
-    </div>
+  document.querySelector(".cv-job").textContent =
+    puesto || "Puesto de trabajo";
 
-    <h3>Perfil profesional</h3>
-    <p>${perfil || "Tu perfil aparecerá aquí."}</p>
+  document.querySelector(".cv-contact").textContent =
+    `📧 ${email || "Email"} · 📞 ${telefono || "Teléfono"} · 📍 ${ciudad || "Ciudad"}`;
 
-    <h3>Experiencia laboral</h3>
-    <p>${experiencia || "Tu experiencia aparecerá aquí."}</p>
+  document.getElementById("previewPerfil").textContent =
+    perfil || "Tu perfil aparecerá aquí.";
 
-    <h3>Formación</h3>
-    <p>${formacion || "Tu formación aparecerá aquí."}</p>
+  document.getElementById("previewExperiencia").textContent =
+    experiencia || "Tu experiencia aparecerá aquí.";
 
-    <h3>Habilidades</h3>
-    <p>${habilidades || "Tus habilidades aparecerán aquí."}</p>
-  `;
+  document.getElementById("previewFormacion").textContent =
+    formacion || "Tu formación aparecerá aquí.";
+
+  document.getElementById("previewHabilidades").textContent =
+    habilidades || "Tus habilidades aparecerán aquí.";
 }
+
+
+/* =========================
+   CARGAR FOTO
+   ========================= */
+
+document.getElementById("foto").addEventListener("change", function(event) {
+
+  const archivo = event.target.files[0];
+
+  if (!archivo) {
+    return;
+  }
+
+  const lector = new FileReader();
+
+  lector.onload = function(e) {
+
+    document.getElementById("fotoPreview").innerHTML = `
+      <img
+        src="${e.target.result}"
+        class="cv-photo"
+        alt="Foto del CV"
+      >
+    `;
+
+  };
+
+  lector.readAsDataURL(archivo);
+
+});
+
 </script>
 
 </body>
